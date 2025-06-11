@@ -1,0 +1,78 @@
+main {
+  display: flex;
+  gap: 40px;
+  padding: 20px;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.asientos-grid {
+  max-width: 800px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+  background: #cad3e376;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.asiento {
+  aspect-ratio: 1/1;
+  font-size: 20px;
+  text-align: center;
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Estados (repetidos aquí para que estén seguros) */
+.asiento.disponible {
+  background-color: #49e449;
+  color: #2d662d;
+}
+
+.asiento.ocupado {
+  background-color: #ef1b1b;
+  color: #7a2121;
+  cursor: not-allowed;
+  opacity: 0.7;
+  pointer-events: none; /* Para evitar clics */
+}
+
+.asiento.seleccionado {
+  background-color: #0646bd;
+  color: white;
+  transform: scale(1.1);
+}
+
+.resumen-seleccion {
+  max-width: 300px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  flex-shrink: 0;
+}
+
+.boton-pago {
+  margin-top: 15px;
+  background-color: #6712c8;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.boton-pago:hover {
+  background-color: #9b6be3;
+}

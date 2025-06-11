@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pagar</title>
+  <link rel="stylesheet" href="pagos.css" />
+  <link rel="stylesheet" href="styleIndex.css">
+</head>
+<body>
+
+  <div id="app" class="seccionPago">
+    <h1>Gracias por tu Preferencia!!</h1>
+
+    <label for="metodo">Selecciona método de pago:</label>
+    <select v-model="metodoPago" id="metodo">
+      <option value="tarjeta">Tarjeta de crédito/débito</option>
+      <option value="qr">Pago con QR</option>
+    </select>
+
+    <!-- FORMULARIO TARJETA -->
+    <div v-if="metodoPago === 'tarjeta'" class="tarjeta-form">
+      <label for="nombre">Nombre en la tarjeta:</label>
+      <input type="text" id="nombre" v-model="tarjeta.nombre" placeholder="Ej: Juan Pérez" />
+
+      <label for="numero">Número de tarjeta:</label>
+      <input type="text" id="numero" v-model="tarjeta.numero" maxlength="16" placeholder="0000 0000 0000 0000" />
+
+      <label for="expiracion">Fecha de expiración (MM/AA):</label>
+      <input type="text" id="expiracion" v-model="tarjeta.expiracion" maxlength="5" placeholder="MM/AA" />
+
+      <label for="cvv">CVV:</label>
+      <input type="password" id="cvv" v-model="tarjeta.cvv" maxlength="3" placeholder="123" />
+
+      <button class="btn-pagar" @click="procesarPagoTarjeta">Pagar con Tarjeta</button>
+    </div>
+
+    <!-- SECCIÓN QR -->
+    <div v-if="metodoPago === 'qr'" class="qr-container">
+      <p>Escanea este código QR para realizar el pago:</p>
+      <canvas id="qrCanvas"></canvas>
+      <div class="qr-code">{{ codigoQR }}</div>
+      <button class="btn-pagar" @click="generarCodigoAlfanumerico">Generar nuevo código QR</button>
+      <button @click="cerrarSesion">Cerrar Sesión</button>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 Todos los derechos reservados.
+  </footer>
+
+  <!-- Librerías -->
+  <script src="https://unpkg.com/vue@3"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+
+  <!-- Script principal -->
+  <script src="pagos.js"></script>
+</body>
+</html>

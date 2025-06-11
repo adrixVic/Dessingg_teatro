@@ -3,25 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Teatro App</title>
+  <title>Login</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="styleIndex.css">
 </head>
 <body>
-  <div id="app">
-    <div v-if="!logueado" class="login-container">
-      <h2>Iniciar Sesión</h2>
-      <input v-model="email" placeholder="Correo" type="email" />
-      <input v-model="password" placeholder="Contraseña" type="password" />
-      <button @click="login">Iniciar sesión</button>
-    </div>
-
-    <div v-else>
-      <h2>Bienvenido al Teatro</h2>
   
+  <header>
+  <div class="logo">Escena Viva</div>
+  <nav class="nav-links">
+    <a href="#funciones">Funciones</a>
+    <a href="../frontend/login.html">Login</a>
+    
+  </nav>
+</header>
+  <main id="app">
+    <div class="login-container">
+      <h2>Iniciar Sesión</h2>
+      <form @submit.prevent="login">
+        <input v-model="email" placeholder="Correo" type="email" required />
+        <input v-model="password" placeholder="Contraseña" type="password" required />
+        <button type="submit">Iniciar sesión</button>
+      </form>
+      <p>¿No tienes cuenta? <a href="index.html">Regístrate</a></p>
     </div>
-  </div>
+  </main>
+   <footer>
+    &copy; 2025 Todos los derechos reservados.</footer>
 
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-  <script src="app.js"></script>
+<script src="app.js" defer></script>
 </body>
 </html>

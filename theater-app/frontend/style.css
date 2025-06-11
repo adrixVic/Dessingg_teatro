@@ -1,16 +1,10 @@
-body {
-  font-family: Arial, sans-serif;
-  background: linear-gradient(to right, #6fa8df, #ff758c);
-  color: #fff;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-}
-
+.container{
+background: #fcfcfc;
+  }
 .login-container {
   padding: 2rem;
   margin-top: 5rem;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgb(255, 255, 255);
   border-radius: 1rem;
   max-width: 400px;
   margin-left: auto;
@@ -27,7 +21,7 @@ input {
 }
 
 button {
-  background: #fff;
+  background: #fcfcfc;
   color: #030731;
   padding: 0.7rem 1.5rem;
   border: none;

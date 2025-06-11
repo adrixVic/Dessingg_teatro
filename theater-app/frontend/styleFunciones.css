@@ -1,0 +1,100 @@
+main#app {
+  flex-grow: 1;
+  padding: 20px;
+
+  box-sizing: border-box;
+}
+
+/* Grid con 2 columnas y filas automáticas */
+.funciones-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  max-width: 900px; /* ancho máximo */
+  margin: 0 auto; /* centrar */
+}
+
+/* Tarjeta individual */
+.funcion-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.funcion-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Imagen */
+.funcion-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+/* Contenido de la tarjeta */
+.funcion-info {
+  padding: 15px 18px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+/* Nombre de la función */
+.funcion-info h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.2rem;
+  color: #6b4c8b; /* lila pastel */
+}
+
+/* Descripción */
+.funcion-info p {
+  flex-grow: 1;
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 12px;
+}
+
+/* Lista de opciones (fechas y horas) */
+.opciones-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Cada opción: texto + botón alineados horizontalmente */
+.opcion-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Texto de la opción (fecha, hora y precio) */
+.opcion-texto {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* Botones de opciones */
+.opciones-list li button {
+  background-color: #a48bd6;
+  border: none;
+  border-radius: 20px;
+  padding: 7px 14px;
+  color: #fff;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.opciones-list li button:hover {
+  background-color: #6b4c8b;
+}

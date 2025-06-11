@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Funciones</title>
+  <link rel="stylesheet" href="styleFunciones.css" />
+    <link rel="stylesheet" href="styleIndex.css">
+</head>
+<body>
+    <header>
+  <h1>Funciones</h1>
+  <nav class="nav-links">
+    
+    <a href="../frontend/login.html">Cerrar Sesion</a>
+    
+  </nav>
+  </header>
+  <main id="app">
+    <div class="funciones-grid">
+      <div class="funcion-card" v-for="funcion in funciones" :key="funcion.id">
+        <img :src="funcion.imagen" :alt="funcion.nombre" />
+        <div class="funcion-info">
+          <h3>{{ funcion.nombre }}</h3>
+          <p>{{ funcion.descripcion }}</p>
+          <ul class="opciones-list">
+            <li
+              v-for="opcion in funcion.opciones"
+              :key="opcion.fecha + opcion.hora"
+              class="opcion-item"
+            >
+              <span class="opcion-texto">
+
+                {{ opcion.fecha }} - {{ opcion.hora }} (Bs.{{ opcion.precio }})
+              </span>
+              <button @click="seleccionarFuncion(funcion, opcion)">Seleccionar</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+     <footer>
+    &copy; 2025 Todos los derechos reservados.</footer>
+   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="app.js" defer></script>
+</body>
+</html>
