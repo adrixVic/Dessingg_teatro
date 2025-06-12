@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 from database import Database
 
@@ -8,7 +8,14 @@ CORS(app)
 
 db = Database()
 
-@app.route('/api/registro', methods=['POST'])
+
+@app.route('/')
+def home():
+    return render_template("index.html") 
+
+
+
+
 def registrar_usuario():
     data = request.json
     query = """

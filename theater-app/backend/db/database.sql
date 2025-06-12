@@ -55,5 +55,3 @@ CREATE TABLE reserva (
     FOREIGN KEY (idAsiento) REFERENCES asiento(idAsiento),
     FOREIGN KEY (idFuncion) REFERENCES funcion(idFuncion)
 );
-
-show databases;

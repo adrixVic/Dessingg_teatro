@@ -3,13 +3,16 @@ from mysql.connector import Error
 from dotenv import load_dotenv
 import os
 
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), ".env"))
+
 class Database:
     def __init__(self):
         load_dotenv()
-        self.host = os.getenv('DB_HOST', '127.0.0.1')
-        self.user = os.getenv('DB_USER', 'root')
-        self.password = os.getenv('DB_PASSWORD', 'root123')
-        self.database = os.getenv('DB_NAME', 'nombre_base_datos')
+        
+        self.host = os.getenv('DB_HOST')
+        self.user = os.getenv('DB_USER')
+        self.password = os.getenv('DB_PASSWORD')
+        self.database = os.getenv('DB_NAME')
         self.port = int(os.getenv('DB_PORT', 3306))
         self.connection = None
         self.connect()
@@ -51,3 +54,5 @@ class Database:
         cursor = self.connection.cursor()
         cursor.execute(query, params)
         self.connection.commit()
+
+print("DB_HOST:", os.getenv('DB_HOST'))  # <-- Esto debe mostrar "127.0.0.1"
