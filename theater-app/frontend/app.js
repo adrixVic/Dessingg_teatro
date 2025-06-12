@@ -3,10 +3,18 @@ const { createApp } = Vue;
 createApp({
   data() {
     return {
+      // Datos de login y registro
+      nombre: "",
+      correo: "",
+      ci: "",
+      direccion: "",
+      telefono: "",
+      contrasena: "",
+      email: "",
+      password: "",
+
+      // Funciones y selección
       funcionSeleccionada: null,
-      asientos: [],
-      email: '',
-      password: '',
       funciones: [
         {
           id: 1,
@@ -48,9 +56,13 @@ createApp({
             { fecha: "21/06/2025", hora: "20:30", precio: 34 }
           ]
         }
-      ]
+      ],
+
+      // Asientos
+      asientos: []
     };
   },
+
   computed: {
     asientosSeleccionados() {
       return this.asientos.filter(a => a.seleccionado);
@@ -63,46 +75,59 @@ createApp({
       return this.cantidadSeleccionados * this.funcionSeleccionada.precio;
     }
   },
+
   methods: {
-    toggleSeleccion(asiento) {
-      if (asiento.estado === 'ocupado') return;
-      asiento.seleccionado = !asiento.seleccionado;
-    },
-    generarAsientos() {
-      const totalAsientos = 140;
-      const asientos = [];
-      for (let i = 1; i <= totalAsientos; i++) {
-        const estado = Math.random() < 0.3 ? 'ocupado' : 'disponible';
-        asientos.push({ id: i, estado, seleccionado: false });
-      }
-      this.asientos = asientos;
-    },
-    comprar() {
-      if (this.cantidadSeleccionados === 0) {
-        alert("Por favor, selecciona al menos un asiento.");
+    // ---------------------- AUTENTICACIÓN ---------------------
+    async registrar() {
+      if (!this.nombre || !this.correo || !this.contrasena) {
+        alert("Completa todos los campos requeridos.");
         return;
       }
 
-      const detallesCompra = {
-        funcion: this.funcionSeleccionada,
-        asientos: this.asientosSeleccionados.map(a => a.id),
-        total: this.totalAPagar
-      };
+      const response = await fetch("http://localhost:5000/api/registro", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          nombre: this.nombre,
+          correo: this.correo,
+          ci: this.ci,
+          direccion: this.direccion,
+          telefono: this.telefono,
+          contrasena: this.contrasena
+        }),
+      });
 
-      // Guardar detalles de compra para la página de pago
-      localStorage.setItem("compraPendiente", JSON.stringify(detallesCompra));
-
-      // Redirigir a la página de pagos
-      window.location.href = "pagos.html";
+      const data = await response.json();
+      alert(data.mensaje || data.error);
+      if (response.ok) window.location.href = "login.html";
     },
-    login() {
+
+    async login() {
       if (!this.email || !this.password) {
         alert("Por favor, ingresa tus credenciales.");
         return;
       }
 
-      window.location.href = "funciones.html";
+      const response = await fetch("http://localhost:5000/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          correo: this.email,
+          contrasena: this.password
+        }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        alert("Bienvenido");
+        localStorage.setItem("usuario", JSON.stringify(data.usuario)); // opcional
+        window.location.href = "funciones.html";
+      } else {
+        alert(data.error);
+      }
     },
+
+    // ---------------------- FUNCIONES Y ASIENTOS ---------------------
     seleccionarFuncion(funcion, opcion) {
       const seleccion = {
         id: funcion.id,
@@ -115,16 +140,51 @@ createApp({
       };
       localStorage.setItem("funcionSeleccionada", JSON.stringify(seleccion));
       window.location.href = "asientos.html";
+    },
+
+    generarAsientos() {
+      const totalAsientos = 140;
+      this.asientos = Array.from({ length: totalAsientos }, (_, i) => ({
+        id: i + 1,
+        estado: Math.random() < 0.3 ? 'ocupado' : 'disponible',
+        seleccionado: false
+      }));
+    },
+
+    toggleSeleccion(asiento) {
+      if (asiento.estado === 'ocupado') return;
+      asiento.seleccionado = !asiento.seleccionado;
+    },
+
+    comprar() {
+      if (this.cantidadSeleccionados === 0) {
+        alert("Por favor, selecciona al menos un asiento.");
+        return;
+      }
+
+      const detallesCompra = {
+        funcion: this.funcionSeleccionada,
+        asientos: this.asientosSeleccionados.map(a => a.id),
+        total: this.totalAPagar
+      };
+
+      localStorage.setItem("compraPendiente", JSON.stringify(detallesCompra));
+      window.location.href = "pagos.html";
     }
   },
+
   created() {
-    const data = localStorage.getItem("funcionSeleccionada");
-    if (data) {
-      this.funcionSeleccionada = JSON.parse(data);
-      this.generarAsientos();
-    } else if (window.location.pathname.includes("asientos.html")) {
-      alert("No se ha seleccionado ninguna función.");
-      window.location.href = "funciones.html";
+    // Si estamos en asientos.html, cargar función y generar asientos
+    if (window.location.pathname.includes("asientos.html")) {
+      const data = localStorage.getItem("funcionSeleccionada");
+      if (data) {
+        this.funcionSeleccionada = JSON.parse(data);
+        this.generarAsientos();
+      } else {
+        alert("No se ha seleccionado ninguna función.");
+        window.location.href = "funciones.html";
+      }
     }
   }
-}).mount('#app');
+
+}).mount("#app");
