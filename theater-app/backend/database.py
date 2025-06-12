@@ -6,14 +6,13 @@ import os
 class Database:
     def __init__(self):
         load_dotenv()
-        self.host = os.getenv('127.0.0.1/3306')
-        self.user = os.getenv('root')
-        self.password = os.getenv('root123')
-        self.database = os.getenv('database')
+        self.host = os.getenv('DB_HOST', '127.0.0.1')
+        self.user = os.getenv('DB_USER', 'root')
+        self.password = os.getenv('DB_PASSWORD', 'root123')
+        self.database = os.getenv('DB_NAME', 'nombre_base_datos')
         self.port = int(os.getenv('DB_PORT', 3306))
         self.connection = None
         self.connect()
-
     def connect(self):
         try:
             self.connection = mysql.connector.connect(
