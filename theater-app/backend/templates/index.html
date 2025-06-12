@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de Registro</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styleIndex.css') }}">
+</head>
+<body>
+  <header>
+    <div class="logo">Escena Viva</div>
+    <nav class="nav-links">
+      <a href="#funciones">Funciones</a>
+      <a href="/login">Login</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <form id="registro-form">
+      <h2>Registro de Usuario</h2>
+
+      <label for="nombre">Nombre completo:</label>
+      <input type="text" id="nombre" name="nombre" required>
+
+      <label for="correo">Correo electrónico:</label>
+      <input type="email" id="correo" name="correo" required>
+
+      <label for="ci">Carnet de Identidad:</label>
+      <input type="text" id="ci" name="ci" required>
+
+      <label for="direccion">Dirección:</label>
+      <input type="text" id="direccion" name="direccion" required>
+
+      <label for="telefono">Teléfono:</label>
+      <input type="tel" id="telefono" name="telefono" pattern="[0-9]{8}" required>
+
+      <label for="contrasena">Contraseña:</label>
+      <input type="password" id="contrasena" name="contrasena"
+             pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{12,}"
+             title="Debe contener al menos 12 caracteres, incluyendo mayúsculas, minúsculas, números y símbolos"
+             required>
+
+      <button type="submit">Registrarse</button>
+    </form>
+  </div>
+
+  <footer>
+    &copy; 2025 Todos los derechos reservados.
+  </footer>
+
+  <script>
+    document.getElementById("registro-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const data = {
+        nombre: document.getElementById("nombre").value,
+        correo: document.getElementById("correo").value,
+        ci: document.getElementById("ci").value,
+        direccion: document.getElementById("direccion").value,
+        telefono: document.getElementById("telefono").value,
+        contrasena: document.getElementById("contrasena").value
+      };
+
+      fetch("/api/registro", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      })
+      .then(res => res.json())
+      .then(response => {
+        if (response.mensaje) {
+          alert("✅ " + response.mensaje);
+          window.location.href = "/login";
+        } else {
+          alert("❌ Error: " + response.error);
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert("❌ Error de conexión con el servidor.");
+      });
+    });
+  </script>
+</body>
+</html>

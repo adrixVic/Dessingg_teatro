@@ -26,11 +26,11 @@ CREATE TABLE funcion (
 CREATE TABLE usuario (
     idUsuario INT NOT NULL AUTO_INCREMENT,
     nombre VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
+    correo VARCHAR(100) NOT NULL UNIQUE,
     CI VARCHAR(20) NOT NULL UNIQUE,
     direccion VARCHAR(150),
     telefono VARCHAR(20),
-    password VARCHAR(255) NOT NULL,
+    contrasena VARCHAR(255) NOT NULL,
     PRIMARY KEY (idUsuario)
 );
 

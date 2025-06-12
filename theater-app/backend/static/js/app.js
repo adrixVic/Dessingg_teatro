@@ -10,8 +10,6 @@ createApp({
       direccion: "",
       telefono: "",
       contrasena: "",
-      email: "",
-      password: "",
 
       // Funciones y selección
       funcionSeleccionada: null,
