@@ -5,12 +5,14 @@ import os
 
 class Database:
     def __init__(self):
-        load_dotenv()  # Cargar variables desde .env
+        load_dotenv()
+        self.host = os.getenv('127.0.0.1/3306')
+        self.user = os.getenv('root')
+        self.password = os.getenv('root123')
+        self.database = os.getenv('database')
+        self.port = int(os.getenv('DB_PORT', 3306))
         self.connection = None
-        self.host = os.getenv("DB_HOST")
-        self.user = os.getenv("DB_USER")
-        self.password = os.getenv("DB_PASSWORD")
-        self.database = os.getenv("DB_NAME")
+        self.connect()
 
     def connect(self):
         try:
@@ -18,39 +20,35 @@ class Database:
                 host=self.host,
                 user=self.user,
                 password=self.password,
-                database=self.database
+                database=self.database,
+                port=self.port
             )
             if self.connection.is_connected():
-                print(" Connected to the database")
+                print(" Conexión establecida con la base de datos.")
         except Error as e:
-            print(f" Connection failed: {e}")
-
-    def close(self):
-        if self.connection and self.connection.is_connected():
-            self.connection.close()
-            print(" Connection closed")
-
-    def execute_query(self, query, params=None):
-        try:
-            cursor = self.connection.cursor()
-            cursor.execute(query, params)
-            self.connection.commit()
-            print(" Query executed successfully")
-        except Error as e:
-            print(f" Error executing query: {e}")
-        finally:
-            cursor.close()
+            print(f" Error de conexión a la base de datos: {e}")
+            self.connection = None
 
     def fetch_one(self, query, params=None):
+        if not self.connection:
+            print(" No hay conexión activa.")
+            return None
         cursor = self.connection.cursor()
         cursor.execute(query, params)
-        result = cursor.fetchone()
-        cursor.close()
-        return result
+        return cursor.fetchone()
 
     def fetch_all(self, query, params=None):
+        if not self.connection:
+            print(" No hay conexión activa.")
+            return []
         cursor = self.connection.cursor()
         cursor.execute(query, params)
-        result = cursor.fetchall()
-        cursor.close()
-        return result
+        return cursor.fetchall()
+
+    def execute(self, query, params=None):
+        if not self.connection:
+            print(" No hay conexión activa.")
+            return
+        cursor = self.connection.cursor()
+        cursor.execute(query, params)
+        self.connection.commit()

@@ -3,10 +3,10 @@ from flask_cors import CORS
 from database import Database
 
 app = Flask(__name__)
-CORS(app)  # Permitir peticiones del frontend
+CORS(app)
+
 
 db = Database()
-db.connect()
 
 @app.route('/api/registro', methods=['POST'])
 def registrar_usuario():
@@ -16,20 +16,20 @@ def registrar_usuario():
     VALUES (%s, %s, %s, %s, %s, %s)
     """
     params = (
-        data['nombre'], data['correo'], data['ci'],
-        data['direccion'], data['telefono'], data['contrasena']
+        data.get('nombre'), data.get('correo'), data.get('ci'),
+        data.get('direccion'), data.get('telefono'), data.get('contrasena')
     )
     try:
-        db.execute_query(query, params)
+        db.execute(query, params)
         return jsonify({"mensaje": "Registro exitoso"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/login', methods=['POST'])
 def login():
-    data = request.json
-    correo = data['correo']
-    contrasena = data['contrasena']
+    data = request.get_json()
+    correo = data.get('correo')
+    contrasena = data.get('contrasena')
 
     query = "SELECT * FROM usuarios WHERE correo = %s AND contrasena = %s"
     usuario = db.fetch_one(query, (correo, contrasena))

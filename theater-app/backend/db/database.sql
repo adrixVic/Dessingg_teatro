@@ -1,45 +1,59 @@
--- SQL script to create the database schema for the theater application
+-- 1. Crear la base de datos solo una vez
+CREATE DATABASE IF NOT EXISTS teatros;
 
--- Create Users table
-CREATE TABLE Users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    email VARCHAR(255) NOT NULL UNIQUE,
+-- 2. Usar la base de datos (¡IMPORTANTE!)
+USE teatros;
+
+-- 3. Crear tablas (ahora sí funciona sin error 1046)
+
+CREATE TABLE teatro (
+    idTeatro INT NOT NULL AUTO_INCREMENT,
+    nombre VARCHAR(100) NOT NULL,
+    direccion VARCHAR(150) NOT NULL,
+    PRIMARY KEY (idTeatro)
+);
+
+CREATE TABLE funcion (
+    idFuncion INT NOT NULL AUTO_INCREMENT,
+    fechaHora DATETIME NOT NULL,
+    nombreObra VARCHAR(100) NOT NULL,
+    estado VARCHAR(50),
+    idTeatro INT NOT NULL,
+    PRIMARY KEY (idFuncion),
+    FOREIGN KEY (idTeatro) REFERENCES teatro(idTeatro)
+);
+
+CREATE TABLE usuario (
+    idUsuario INT NOT NULL AUTO_INCREMENT,
+    nombre VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    CI VARCHAR(20) NOT NULL UNIQUE,
+    direccion VARCHAR(150),
+    telefono VARCHAR(20),
     password VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    PRIMARY KEY (idUsuario)
 );
 
--- Create Shows table
-CREATE TABLE Shows (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    description TEXT,
-    date DATE NOT NULL,
-    time TIME NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE asiento (
+    idAsiento INT NOT NULL AUTO_INCREMENT,
+    fila VARCHAR(10) NOT NULL,
+    numero INT NOT NULL,
+    estado ENUM('libre', 'ocupado') DEFAULT 'libre',
+    idFuncion INT NOT NULL,
+    PRIMARY KEY (idAsiento),
+    FOREIGN KEY (idFuncion) REFERENCES funcion(idFuncion)
 );
 
--- Create Seats table
-CREATE TABLE Seats (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    show_id INT NOT NULL,
-    seat_number INT NOT NULL,
-    status ENUM('libre', 'ocupado', 'seleccionado') DEFAULT 'libre',
-    FOREIGN KEY (show_id) REFERENCES Shows(id) ON DELETE CASCADE
+CREATE TABLE reserva (
+    idReserva INT NOT NULL AUTO_INCREMENT,
+    fecha DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    idUsuario INT NOT NULL,
+    idAsiento INT NOT NULL,
+    idFuncion INT NOT NULL,
+    PRIMARY KEY (idReserva),
+    FOREIGN KEY (idUsuario) REFERENCES usuario(idUsuario),
+    FOREIGN KEY (idAsiento) REFERENCES asiento(idAsiento),
+    FOREIGN KEY (idFuncion) REFERENCES funcion(idFuncion)
 );
 
--- Create Payments table
-CREATE TABLE Payments (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    show_id INT NOT NULL,
-    amount DECIMAL(10, 2) NOT NULL,
-    payment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
-    FOREIGN KEY (show_id) REFERENCES Shows(id) ON DELETE CASCADE
-);
-
--- Insert sample data into Shows table
-INSERT INTO Shows (title, description, date, time) VALUES
-('Hamlet', 'A tragedy by William Shakespeare', '2023-11-01', '20:00'),
-('The Phantom of the Opera', 'A musical by Andrew Lloyd Webber', '2023-11-05', '19:30'),
-('Les Misérables', 'A musical based on the novel by Victor Hugo', '2023-11-10', '21:00');
+show databases;
