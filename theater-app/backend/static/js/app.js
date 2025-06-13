@@ -18,7 +18,7 @@ createApp({
           id: 1,
           nombre: "La Casa de Bernarda Alba",
           descripcion: "Drama clásico sobre la represión y el poder.",
-          imagen: "../assets/fun1.jpg",
+          imagen: "../static/assets/fun1.jpg",
           opciones: [
             { fecha: "12/06/2025", hora: "18:00", precio: 30 },
             { fecha: "13/06/2025", hora: "20:00", precio: 35 }
@@ -28,7 +28,7 @@ createApp({
           id: 2,
           nombre: "Sueño de una Noche de Verano",
           descripcion: "Comedia mágica de Shakespeare.",
-          imagen: "../assets/fun2.webp",
+          imagen: "../static/assets/fun2.webp",
           opciones: [
             { fecha: "15/06/2025", hora: "19:00", precio: 28 },
             { fecha: "16/06/2025", hora: "21:00", precio: 32 }
@@ -38,7 +38,7 @@ createApp({
           id: 3,
           nombre: "El Principito",
           descripcion: "Obra adaptada del clásico literario.",
-          imagen: "../assets/fun3.png",
+          imagen: "../static/assets/fun3.png",
           opciones: [
             { fecha: "18/06/2025", hora: "17:00", precio: 25 },
             { fecha: "19/06/2025", hora: "19:00", precio: 27 }
@@ -48,7 +48,7 @@ createApp({
           id: 4,
           nombre: "Bodas de Sangre",
           descripcion: "Tragedia de amor y muerte de Lorca.",
-          imagen: "../assets/fun5.jfif",
+          imagen: "../static/assets/fun5.jfif",
           opciones: [
             { fecha: "20/06/2025", hora: "18:30", precio: 29 },
             { fecha: "21/06/2025", hora: "20:30", precio: 34 }

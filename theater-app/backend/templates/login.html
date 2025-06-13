@@ -32,35 +32,37 @@
   </footer>
 
   <script>
-    document.getElementById("login-form").addEventListener("submit", function(e) {
-      e.preventDefault();
+  document.getElementById("login-form").addEventListener("submit", function(e) {
+    e.preventDefault();
 
-      const data = {
-        correo: document.getElementById("correo").value,
-        contrasena: document.getElementById("contrasena").value
-      };
+    const data = {
+      correo: document.getElementById("correo").value,
+      contrasena: document.getElementById("contrasena").value
+    };
 
-      fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-      })
-      .then(res => res.json())
-      .then(response => {
-        if (response.mensaje) {
-          alert("✅ " + response.mensaje);
-          // Redirigir a funciones, home, etc.
-        } else {
-          alert("❌ " + response.error);
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        alert("❌ Error de conexión con el servidor.");
-      });
+    fetch("/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(response => {
+      if (response.mensaje) {
+        alert("✅ " + response.mensaje);
+        // 🔁 Aquí redirigimos a la vista de funciones
+        window.location.href = "/funciones";
+      } else {
+        alert("❌ " + response.error);
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      alert("❌ Error de conexión con el servidor.");
     });
-  </script>
+  });
+</script>
+
 </body>
 </html>
