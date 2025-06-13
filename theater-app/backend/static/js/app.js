@@ -168,7 +168,7 @@ createApp({
       };
 
       localStorage.setItem("compraPendiente", JSON.stringify(detallesCompra));
-      window.location.href = "pagos.html";
+      window.location.href = "/pagos";
     }
   },
 

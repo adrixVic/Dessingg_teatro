@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pagar</title>
-  <link rel="stylesheet" href="pagos.css" />
-  <link rel="stylesheet" href="styleIndex.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/pagos.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styleIndex.css') }}" />
 </head>
 <body>
 
@@ -33,6 +33,7 @@
       <input type="password" id="cvv" v-model="tarjeta.cvv" maxlength="3" placeholder="123" />
 
       <button class="btn-pagar" @click="procesarPagoTarjeta">Pagar con Tarjeta</button>
+       <button @click="cerrarSesion">Cerrar Sesión</button>
     </div>
 
     <!-- SECCIÓN QR -->
@@ -54,6 +55,6 @@
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 
   <!-- Script principal -->
-  <script src="pagos.js"></script>
+  <script src="{{ url_for('static', filename='js/pagos.js') }}"></script>
 </body>
 </html>

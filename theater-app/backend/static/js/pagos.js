@@ -54,7 +54,7 @@ createApp({
       sessionStorage.clear();
 
       // Redirige al login (ajusta la ruta si es diferente)
-      window.location.href = 'login.html';
+      window.location.href = '/login';
     }
   },
   watch: {

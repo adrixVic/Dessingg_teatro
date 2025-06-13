@@ -23,6 +23,10 @@ def funciones():
 def asientos():
     return render_template("asientos.html")
 
+@app.route("/pagos")
+def pagos():
+    return render_template("pagos.html")
+
 
 @app.route('/api/registro', methods=['POST'])
 def registrar_usuario():
