@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Seleccionar Asientos</title>
-  <link rel="stylesheet" href="asientos.css" />
-  <link rel="stylesheet" href="styleIndex.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/asientos.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styleIndex.css') }}" />
   <!-- Font Awesome para el icono de asiento -->
   <link
     rel="stylesheet"
@@ -41,11 +41,11 @@
         <h3>Asientos seleccionados</h3>
         <ul>
           <li v-for="asiento in asientos.filter(a => a.seleccionado)" :key="asiento.id">
-            Asiento {{ asiento.id }}
+            Asiento [[ asiento.id ]]
           </li>
         </ul>
-        <p><strong>Total seleccionados:</strong> {{ cantidadSeleccionados }}</p>
-        <p><strong>Total a pagar:</strong> Bs {{ totalAPagar }}</p>
+        <p><strong>Total seleccionados:</strong> [[ cantidadSeleccionados ]]</p>
+        <p><strong>Total a pagar:</strong> Bs [[ totalAPagar ]]</p>
         <button @click="comprar" class="boton-pago">Ir a Pagar</button>
       </div>
     </main>
@@ -55,7 +55,8 @@
     &copy; 2025 Todos los derechos reservados.
   </footer>
 
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-  <script src="app.js" defer></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+
 </body>
 </html>

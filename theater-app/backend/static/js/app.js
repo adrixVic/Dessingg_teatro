@@ -1,6 +1,7 @@
 const { createApp } = Vue;
 
 createApp({
+  delimiters: ['[[', ']]'],
   data() {
     return {
       // Datos de login y registro
@@ -137,7 +138,7 @@ createApp({
         precio: opcion.precio
       };
       localStorage.setItem("funcionSeleccionada", JSON.stringify(seleccion));
-      window.location.href = "asientos.html";
+      window.location.href = "/asientos";
     },
 
     generarAsientos() {
@@ -172,17 +173,19 @@ createApp({
   },
 
   created() {
-    // Si estamos en asientos.html, cargar función y generar asientos
-    if (window.location.pathname.includes("asientos.html")) {
-      const data = localStorage.getItem("funcionSeleccionada");
-      if (data) {
-        this.funcionSeleccionada = JSON.parse(data);
-        this.generarAsientos();
-      } else {
-        alert("No se ha seleccionado ninguna función.");
-        window.location.href = "funciones.html";
-      }
+  console.log("🌱 Vue creado, path:", window.location.pathname);
+  if (window.location.pathname.includes("asientos")) {
+    const data = localStorage.getItem("funcionSeleccionada");
+    console.log("🧠 Datos función seleccionada:", data);
+    if (data) {
+      this.funcionSeleccionada = JSON.parse(data);
+      this.generarAsientos();
+    } else {
+      alert("No se ha seleccionado ninguna función.");
+      window.location.href = "/funciones";
     }
   }
+}
+
 
 }).mount("#app");

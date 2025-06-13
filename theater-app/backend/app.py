@@ -19,6 +19,10 @@ def login_page():
 def funciones():
     return render_template('funciones.html')
 
+@app.route("/asientos")
+def asientos():
+    return render_template("asientos.html")
+
 
 @app.route('/api/registro', methods=['POST'])
 def registrar_usuario():

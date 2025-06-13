@@ -22,12 +22,12 @@
     <div class="funcion-card" v-for="funcion in funciones" :key="funcion.id">
       <img :src="funcion.imagen" :alt="funcion.nombre" />
       <div class="funcion-info">
-        <h3>{{ funcion.nombre }}</h3>
-        <p>{{ funcion.descripcion }}</p>
+        <h3>[[ funcion.nombre ]]</h3>
+        <p>[[ funcion.descripcion ]]</p>
         <ul class="opciones-list">
           <li v-for="opcion in funcion.opciones" :key="opcion.fecha + opcion.hora" class="opcion-item">
             <span class="opcion-texto">
-              {{ opcion.fecha }} - {{ opcion.hora }} (Bs.{{ opcion.precio }})
+              [[ opcion.fecha ]] - [[ opcion.hora ]] (Bs. [[ opcion.precio ]])
             </span>
             <button @click="seleccionarFuncion(funcion, opcion)">Seleccionar</button>
           </li>
